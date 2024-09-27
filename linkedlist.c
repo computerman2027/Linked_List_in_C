@@ -85,6 +85,48 @@ Node *deleteAtEnd(Node *head)
     }
 }
 
+Node* deleteParticularValue(Node* head,int val)
+{
+    if(head->data==val)
+    return head->next;
+    else
+    {
+        Node* temp=head;
+        while(temp->next->data==val)
+        {
+            temp->next=temp->next->next;
+            return head;
+        }
+        printf("Value do not exists. Node cannot be deleted\n");
+        return head;
+    }
+}
+
+int countNodes(Node* head)
+{
+    Node* temp=head;
+    int c=0;
+    while(temp!=NULL)
+    {
+        c++;
+    }
+    return c;
+}
+
+Node* reverseLL(Node* head)
+{
+    Node* ptr=head;
+    Node* pptr=NULL;
+    while(ptr!=NULL)
+    {
+        Node* temp=ptr->next;
+        ptr->next=pptr;
+        pptr=ptr;
+        ptr=temp;
+    }
+    return pptr;
+}
+
 void displayLL(Node *head)
 {
     Node *temp = head;
@@ -110,7 +152,7 @@ int main()
     int choice, num;
     while (true)
     {
-        printf("MENU\n1. Insert At end\n2. Insert an Begining\n3. Delete at end\n4. Delete at begining\n5. Insert after a value\n6. Insert before a value\n7. Delete after a value\n8. Delete before a value\n9. Delete particuar value\n10. Count number of nodes\n11. Reverse a Linked List\n12. Display\n13. Exit\n");
+        printf("MENU\n1. Insert At end\n2. Insert an Begining\n3. Delete at end\n4. Delete at begining\n5. Insert after a value\n6. Insert before a value\n7. Delete after a value\n8. Delete before a value\n9. Delete particular value\n10. Count number of nodes\n11. Reverse a Linked List\n12. Display\n13. Exit\n");
         printf("Enter your choice : ");
         scanf("%d", &choice);
         switch (choice)
