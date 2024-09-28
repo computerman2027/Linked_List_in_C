@@ -49,17 +49,6 @@ Node *insertAtBegining(Node *head, int item)
     return newnode;
 }
 
-Node *deleteAtBegining(Node *head)
-{
-    if (head == NULL)
-    {
-        printf("linked list empty\n");
-        return NULL;
-    }
-    printf("Deleted element = %d\n", head->data);
-    return head->next;
-}
-
 Node *deleteAtEnd(Node *head)
 {
     if (head == NULL)
@@ -85,16 +74,127 @@ Node *deleteAtEnd(Node *head)
     }
 }
 
-Node* deleteParticularValue(Node* head,int val)
+Node *deleteAtBegining(Node *head)
 {
-    if(head->data==val)
+    if (head == NULL)
+    {
+        printf("linked list empty\n");
+        return NULL;
+    }
+    printf("Deleted element = %d\n", head->data);
     return head->next;
+}
+
+Node *insertAfterAValue(Node *head, int val, int item)
+{
+    if (head == NULL)
+    {
+        printf("Linked List is Empty\n");
+        return NULL;
+    }
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == val)
+        {
+            Node *newnode = createnode(item);
+            newnode->next = temp->next;
+            temp->next = newnode;
+            return head;
+        }
+        temp = temp->next;
+    }
+    printf("Value Not found. Insertion not possible\n");
+    return head;
+}
+
+Node *insertBeforeAValue(Node *head, int val, int item)
+{
+    if (head == NULL)
+    {
+        printf("Linked List is Empty\n");
+        return NULL;
+    }
+    Node *newnode = createnode(item);
+    if (head->data == val)
+    {
+        newnode->next = head;
+        return newnode;
+    }
     else
     {
-        Node* temp=head;
-        while(temp->next->data==val)
+        Node *temp = head;
+        while (temp->next != NULL)
         {
-            temp->next=temp->next->next;
+            if (temp->next->data == val)
+            {
+                newnode->next = temp->next;
+                temp->next = newnode;
+                return head;
+            }
+        }
+    }
+    printf("Value Not found. Insertion not possible\n");
+    return head;
+}
+
+Node *deleteBeforeAValue(Node *head, int val)
+{
+    if (head == NULL)
+    {
+        printf("Linked List is Empty\n");
+        return NULL;
+    }
+    if (head->next->data == val)
+    {
+        return head->next;
+    }
+    Node *temp = head;
+    while (temp->next != NULL)
+    {
+        if (temp->next->next->data == val)
+        {
+            temp->next = temp->next->next;
+            return head;
+        }
+    }
+    printf("Value Not found. Deletion not possible\n");
+    return head;
+}
+
+Node *deleteAfterAValue(Node *head, int val)
+{
+    if (head == NULL)
+    {
+        printf("Linked List is Empty\n");
+        return NULL;
+    }
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == val)
+        {
+            if (temp->next != NULL)
+            {
+                temp->next = temp->next->next;
+            }
+        }
+        return head;
+    }
+    printf("Value Not found. Deletion not possible\n");
+    return head;
+}
+
+Node *deleteParticularValue(Node *head, int val)
+{
+    if (head->data == val)
+        return head->next;
+    else
+    {
+        Node *temp = head;
+        while (temp->next->data == val)
+        {
+            temp->next = temp->next->next;
             return head;
         }
         printf("Value do not exists. Node cannot be deleted\n");
@@ -102,27 +202,27 @@ Node* deleteParticularValue(Node* head,int val)
     }
 }
 
-int countNodes(Node* head)
+int countNodes(Node *head)
 {
-    Node* temp=head;
-    int c=0;
-    while(temp!=NULL)
+    Node *temp = head;
+    int c = 0;
+    while (temp != NULL)
     {
         c++;
     }
     return c;
 }
 
-Node* reverseLL(Node* head)
+Node *reverseLL(Node *head)
 {
-    Node* ptr=head;
-    Node* pptr=NULL;
-    while(ptr!=NULL)
+    Node *ptr = head;
+    Node *pptr = NULL;
+    while (ptr != NULL)
     {
-        Node* temp=ptr->next;
-        ptr->next=pptr;
-        pptr=ptr;
-        ptr=temp;
+        Node *temp = ptr->next;
+        ptr->next = pptr;
+        pptr = ptr;
+        ptr = temp;
     }
     return pptr;
 }
@@ -149,7 +249,7 @@ void displayLL(Node *head)
 
 int main()
 {
-    int choice, num;
+    int choice, num, num2;
     while (true)
     {
         printf("MENU\n1. Insert At end\n2. Insert an Begining\n3. Delete at end\n4. Delete at begining\n5. Insert after a value\n6. Insert before a value\n7. Delete after a value\n8. Delete before a value\n9. Delete particular value\n10. Count number of nodes\n11. Reverse a Linked List\n12. Display\n13. Exit\n");
@@ -172,6 +272,45 @@ int main()
             break;
         case 4:
             header = deleteAtBegining(header);
+            break;
+        case 5:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            printf("enter the value after which the data need to be inserted : ");
+            scanf("%d", &num2);
+            header = insertAfterAValue(header, num2, num);
+            break;
+        case 6:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            printf("enter the value before which the data need to be inserted : ");
+            scanf("%d", &num2);
+            header = insertBeforeAValue(header, num2, num);
+            break;
+        case 7:
+            printf("Enter a value after which node deletion will be deleted : ");
+            scanf("%d", &num2);
+            header = deleteAfterAValue(header, num2);
+            break;
+        case 8:
+            printf("Enter a value before which node deletion will be deleted : ");
+            scanf("%d", &num2);
+            header = deleteBeforeAValue(header, num2);
+            break;
+        case 9:
+            printf("Enter value that need to be deleted : ");
+            scanf("%d", &num2);
+            header = deleteParticularValue(header, num2);
+            break;
+        case 10:
+            printf("No of nodes in linked List is %d\n", countNodes(header));
+            break;
+        case 11:
+            header = reverseLL(header);
+            if (header == NULL)
+                printf("Linked List not present\n");
+            else
+                displayLL(header);
             break;
         case 12:
             displayLL(header);
