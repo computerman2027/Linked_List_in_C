@@ -132,6 +132,7 @@ Node *insertBeforeAValue(Node *head, int val, int item)
                 temp->next = newnode;
                 return head;
             }
+            temp = temp->next;
         }
     }
     printf("Value Not found. Insertion not possible\n");
@@ -157,6 +158,7 @@ Node *deleteBeforeAValue(Node *head, int val)
             temp->next = temp->next->next;
             return head;
         }
+        temp = temp->next;
     }
     printf("Value Not found. Deletion not possible\n");
     return head;
@@ -178,8 +180,9 @@ Node *deleteAfterAValue(Node *head, int val)
             {
                 temp->next = temp->next->next;
             }
+            return head;
         }
-        return head;
+        temp = temp->next;
     }
     printf("Value Not found. Deletion not possible\n");
     return head;
@@ -192,10 +195,14 @@ Node *deleteParticularValue(Node *head, int val)
     else
     {
         Node *temp = head;
-        while (temp->next->data == val)
+        while (temp->next != NULL)
         {
-            temp->next = temp->next->next;
-            return head;
+            if (temp->next->data == val)
+            {
+                temp->next = temp->next->next;
+                return head;
+            }
+            temp = temp->next;
         }
         printf("Value do not exists. Node cannot be deleted\n");
         return head;
@@ -209,6 +216,7 @@ int countNodes(Node *head)
     while (temp != NULL)
     {
         c++;
+        temp = temp->next;
     }
     return c;
 }
