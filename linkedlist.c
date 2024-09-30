@@ -151,7 +151,7 @@ Node *deleteBeforeAValue(Node *head, int val)
         return head->next;
     }
     Node *temp = head;
-    while (temp->next != NULL)
+    while (temp->next->next != NULL)
     {
         if (temp->next->next->data == val)
         {
