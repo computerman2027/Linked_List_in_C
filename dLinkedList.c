@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum boolean
+{
+    false,
+    true
+};
+
 typedef struct node
 {
     int data;
@@ -33,6 +39,11 @@ void insertAtBegining(int item)
 void insertAtEnd(int item)
 {
     Node *newnode = createnode(item);
+    if(head==NULL)
+    {
+        head=newnode;
+        return;
+    }
     Node *temp = head;
     while (temp->next != NULL)
     {
@@ -63,6 +74,56 @@ void insertAfter(int item, int after)
         }
         temp = temp->next;
     }
+}
+
+void insertBefore(int item, int before)
+{
+    if (head == NULL)
+    {
+        printf("Linked List empty\n");
+        return;
+    }
+    Node *temp = head;
+    while (temp != NULL)
+    {
+        if (temp->data == before)
+        {
+            Node *newnode = createnode(item);
+            if (temp->prev == NULL)
+            {
+                newnode->next = temp;
+                temp->prev = newnode;
+                head = newnode;
+                return;
+            }
+            else
+            {
+                newnode->next = temp;
+                temp->prev->next = newnode;
+                newnode->prev = temp->prev;
+                temp->prev = newnode;
+                return;
+            }
+        }
+        temp=temp->next;
+    }
+    printf("Before element not found\n");
+}
+
+void deleteAtEnd()
+{
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return;
+    }
+    else if(head->next==NULL)
+    {
+        free(head);
+        
+    }
+    Node* temp=head;
+    while(temp->next)
 }
 
 int countNodes()
@@ -116,29 +177,86 @@ void displayAddress()
 
 int main()
 {
-    insertAtBegining(5);
-    insertAtBegining(2);
-    insertAtBegining(4);
-    insertAtBegining(67);
-    display();
-    insertAtBegining(590);
-    insertAtBegining(6);
-    insertAtBegining(-1);
-    display();
-    insertAtEnd(45);
-    insertAtEnd(33);
-    insertAtEnd(23);
-    insertAtEnd(22);
-    display();
-    displayAddress();
-    insertAtBegining(342);
-    insertAtBegining(4433);
-    insertAtBegining(1);
-    insertAtBegining(1167);
-    insertAtEnd(3424);
-    display();
-
-    printf("No of nodes = %d\n", countNodes());
-    printf("Total size of linked list = %d bytes\n", sizeof(Node) * countNodes());
+    int choice, num, num2;
+    while (true)
+    {
+        printf("MENU\n1. Insert At end\n2. Insert an Begining\n3. Delete at end\n4. Delete at begining\n5. Insert after a value\n6. Insert before a value\n7. Delete after a value\n8. Delete before a value\n9. Delete particular value\n10. Count number of nodes\n11. Reverse a Linked List\n12. Display\n13. Display all details of node\n14. Exit\n");
+        printf("Enter your choice : ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            insertAtEnd(num);
+            break;
+        case 2:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            insertAtBegining(num);
+            break;
+        // case 3:
+        //     header = deleteAtEnd(header);
+        //     break;
+        // case 4:
+        //     header = deleteAtBegining(header);
+        //     break;
+        case 5:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            printf("enter the value after which the data need to be inserted : ");
+            scanf("%d", &num2);
+            insertAfter(num, num2);
+            break;
+        case 6:
+            printf("enter the data that need to be inserted : ");
+            scanf("%d", &num);
+            printf("enter the value before which the data need to be inserted : ");
+            scanf("%d", &num2);
+            insertBefore(num, num2);
+            break;
+        // case 7:
+        //     printf("Enter a value after which node deletion will be deleted : ");
+        //     scanf("%d", &num2);
+        //     header = deleteAfterAValue(header, num2);
+        //     break;
+        // case 8:
+        //     printf("Enter a value before which node deletion will be deleted : ");
+        //     scanf("%d", &num2);
+        //     header = deleteBeforeAValue(header, num2);
+        //     break;
+        // case 9:
+        //     printf("Enter value that need to be deleted : ");
+        //     scanf("%d", &num2);
+        //     header = deleteParticularValue(header, num2);
+        //     break;
+        case 10:
+            printf("No of nodes in linked List is %d\n", countNodes());
+            printf("Total size of linked list = %d bytes\n", sizeof(Node) * countNodes());
+            break;
+        // case 11:
+        //     header = reverseLL(header);
+        //     if (header == NULL)
+        //         printf("Linked List not present\n");
+        //     else
+        //         displayLL(header);
+        //     break;
+        case 12:
+            display();
+            break;
+        case 13:
+            displayAddress();
+            break;
+        case 14:
+            printf("End of program");
+            return 0;
+        default:
+            printf("Invalid input\n");
+            break;
+        }
+    }
     return 0;
+    // printf("No of nodes = %d\n", countNodes());
+    // printf("Total size of linked list = %d bytes\n", sizeof(Node) * countNodes());
+    // return 0;
 }
