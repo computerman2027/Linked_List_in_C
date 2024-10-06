@@ -120,10 +120,29 @@ void deleteAtEnd()
     else if(head->next==NULL)
     {
         free(head);
-        
+        head=NULL;
     }
     Node* temp=head;
-    while(temp->next)
+    while(temp->next->next!=NULL)
+    {
+        temp=temp->next;
+    }
+    Node* del=temp->next;
+    temp->next=NULL;
+    free(del);
+}
+
+void deleteAtFront()
+{
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return;
+    }
+    Node* del=head;
+    head=head->next;
+    head->prev=NULL;
+    free(del);
 }
 
 int countNodes()
@@ -195,12 +214,12 @@ int main()
             scanf("%d", &num);
             insertAtBegining(num);
             break;
-        // case 3:
-        //     header = deleteAtEnd(header);
-        //     break;
-        // case 4:
-        //     header = deleteAtBegining(header);
-        //     break;
+        case 3:
+            deleteAtEnd();
+            break;
+        case 4:
+            deleteAtFront();
+            break;
         case 5:
             printf("enter the data that need to be inserted : ");
             scanf("%d", &num);
