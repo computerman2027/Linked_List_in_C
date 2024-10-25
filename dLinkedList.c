@@ -215,6 +215,37 @@ void deleteBeforeAValue(int val)
     printf("Before node not found\n");
 }
 
+void deleteParticularValue(int val)
+{
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return;
+    }
+    Node* temp=head;
+    while(temp!=NULL)
+    {
+        if(temp->data==val)
+        {
+            Node* del=temp;
+            if(temp==head)
+            {
+                head=temp->next;
+                temp->prev=NULL;
+            }
+            else
+            {
+                temp->prev->next=temp->next;
+                temp->next->prev=temp->prev;
+            }
+            free(temp);
+            return;
+        }
+        temp=temp->next;
+    }
+    printf("Element not found\n");
+}
+
 int countNodes()
 {
     int c = 0;
@@ -314,11 +345,11 @@ int main()
             scanf("%d", &num2);
             deleteBeforeAValue(num2);
             break;
-        // case 9:
-        //     printf("Enter value that need to be deleted : ");
-        //     scanf("%d", &num2);
-        //     header = deleteParticularValue(header, num2);
-        //     break;
+        case 9:
+            printf("Enter value that need to be deleted : ");
+            scanf("%d", &num2);
+            deleteParticularValue(num2);
+            break;
         case 10:
             printf("No of nodes in linked List is %d\n", countNodes());
             printf("Total size of linked list = %d bytes\n", sizeof(Node) * countNodes());
