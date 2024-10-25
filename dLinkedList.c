@@ -176,6 +176,45 @@ void deleteAfterAValue(int val)
     printf("After node not found\n");
 }
 
+void deleteBeforeAValue(int val)
+{
+    if(head==NULL)
+    {
+        printf("Linked List is empty\n");
+        return;
+    }
+    Node* temp=head;
+    while(temp!=NULL)
+    {
+        if(temp->data==val)
+        {
+            if(temp->prev==NULL)
+            {
+                printf("no before node present to be deleted\n");
+                return;
+            }
+            else
+            {
+                Node* del=temp->prev;
+                if(temp->prev==head)
+                {
+                    head=temp;
+                    temp->prev=NULL;
+                }
+                else
+                {
+                    temp->prev=temp->prev->prev;
+                    temp->prev->next=temp;
+                }
+                free(del);
+                return;
+            }
+        }
+        temp=temp->next;
+    }
+    printf("Before node not found\n");
+}
+
 int countNodes()
 {
     int c = 0;
@@ -270,11 +309,11 @@ int main()
             scanf("%d", &num2);
             deleteAfterAValue(num2);
             break;
-        // case 8:
-        //     printf("Enter a value before which node deletion will be deleted : ");
-        //     scanf("%d", &num2);
-        //     header = deleteBeforeAValue(header, num2);
-        //     break;
+        case 8:
+            printf("Enter a value before which node deletion will be deleted : ");
+            scanf("%d", &num2);
+            deleteBeforeAValue(num2);
+            break;
         // case 9:
         //     printf("Enter value that need to be deleted : ");
         //     scanf("%d", &num2);
