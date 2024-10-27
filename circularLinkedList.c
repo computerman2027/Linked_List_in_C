@@ -162,6 +162,73 @@ void deleteLast()
     }
 }
 
+void deleteAfter(int after)
+{
+    if (head == NULL)
+    {
+        printf("Linked list empty nothing to delete\n");
+        return;
+    }
+    else
+    {
+        Node *temp = head;
+        while (temp->next != head)
+        {
+            if (temp->data == after)
+            {
+                Node *del = temp->next;
+                temp->next = temp->next->next;
+                free(del);
+                return;
+            }
+            temp = temp->next;
+        }
+        if (temp->data != after)
+        {
+            printf("AFTER value not found\n");
+        }
+        else
+        {
+            printf("no element present to be deleted\n");
+        }
+    }
+}
+
+void deleteBefore(int before)
+{
+    if (head == NULL)
+    {
+        printf("Linked list empty nothing to delete\n");
+        return;
+    }
+    else if (head->next != NULL && head->next->data == before)
+    {
+        Node* del=head;
+        head = head->next;
+        free(del);
+    }
+    else
+    {
+        Node *temp = head;
+        if (head->data == before)
+        {
+            return;
+        }
+        while (temp->next!=NULL && temp->next->next != NULL)
+        {
+            if (temp->next->next->data == before)
+            {
+                Node *del = temp->next;
+                temp->next = temp->next->next;
+                free(del);
+                return;
+            }
+            temp = temp->next;
+        }
+        printf("BEFORE value not found\n");
+    }
+}
+
 
 void display()
 {
@@ -259,11 +326,11 @@ int main()
         case 6:
             deleteLast();
             break;
-        // case 7:
-        //     printf("Enter value after which it will be deleted : ");
-        //     scanf("%d", &term2);
-        //     deleteAfter(term2);
-        //     break;
+        case 7:
+            printf("Enter value after which it will be deleted : ");
+            scanf("%d", &term2);
+            deleteAfter(term2);
+            break;
         // case 8:
         //     printf("Enter value before which it will be deleted : ");
         //     scanf("%d", &term2);
