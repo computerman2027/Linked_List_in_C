@@ -119,6 +119,50 @@ void insertbefore(int item, int before)
     }
 }
 
+void deleteFirst()
+{
+    if (head == NULL)
+    {
+        printf("Linked list empty nothing to delete\n");
+        return;
+    }
+    Node *del = head;
+    head = head->next;
+    Node* temp = head;
+    while(temp->next!=del)
+    {
+        temp=temp->next;
+    }
+    temp->next=head;
+    free(del);
+}
+
+void deleteLast()
+{
+    if (head == NULL)
+    {
+        printf("Linked list empty nothing to delete\n");
+        return;
+    }
+    else if (head->next == head)
+    {
+        free(head);
+        head = NULL;
+    }
+    else
+    {
+        Node *temp = head;
+        while (temp->next->next != head)
+        {
+            temp = temp->next;
+        }
+        Node *del = temp->next;
+        temp->next = head;
+        free(del);
+    }
+}
+
+
 void display()
 {
     Node *temp = head;
@@ -209,12 +253,12 @@ int main()
             scanf("%d", &term2);
             insertbefore(term, term2);
             break;
-        // case 5:
-        //     deleteFirst();
-        //     break;
-        // case 6:
-        //     deleteLast();
-        //     break;
+        case 5:
+            deleteFirst();
+            break;
+        case 6:
+            deleteLast();
+            break;
         // case 7:
         //     printf("Enter value after which it will be deleted : ");
         //     scanf("%d", &term2);
