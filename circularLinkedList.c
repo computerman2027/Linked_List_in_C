@@ -207,10 +207,16 @@ void deleteBefore(int before)
         printf("Linked list empty nothing to delete\n");
         return;
     }
-    else if (head->next != NULL && head->next->data == before)
+    else if (head->next != head && head->next->data == before)
     {
         Node* del=head;
-        head = head->next;
+        Node* temp = head;
+        while(temp->next!=head)
+        {
+            temp=temp->next;
+        }
+        temp->next=head->next;
+        head=head->next;
         free(del);
     }
     else
@@ -220,7 +226,7 @@ void deleteBefore(int before)
         {
             return;
         }
-        while (temp->next!=NULL && temp->next->next != NULL)
+        while (temp->next!=head && temp->next->next != head)
         {
             if (temp->next->next->data == before)
             {
@@ -339,11 +345,11 @@ int main()
             scanf("%d", &term2);
             deleteAfter(term2);
             break;
-        // case 8:
-        //     printf("Enter value before which it will be deleted : ");
-        //     scanf("%d", &term2);
-        //     deleteBefore(term2);
-        //     break;
+        case 8:
+            printf("Enter value before which it will be deleted : ");
+            scanf("%d", &term2);
+            deleteBefore(term2);
+            break;
         case 9:
             display();
             break;
