@@ -129,6 +129,12 @@ void deleteFirst()
     Node *del = head;
     head = head->next;
     Node* temp = head;
+    if(head==temp->next)
+    {
+        free(del);
+        head=NULL;
+        return;
+    }
     while(temp->next!=del)
     {
         temp=temp->next;
@@ -275,6 +281,8 @@ void displayAddress()
 
 void freeList()
 {
+    if(head==NULL)
+    return;
     Node *temp = head;
     while (temp->next != head)
     {
